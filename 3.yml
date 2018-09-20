@@ -1,0 +1,20 @@
+---
+ - hosts: all
+   remote_user: root
+   vars_files:
+
+    - variables.yml
+
+   tasks:
+   
+   - name: starting "{{x}}"  #firewalld
+     service: name="{{x}}" state=started
+
+   - name: started "{{y}}"  #httpd
+     service: name="{{y}}" state=reloaded   
+
+   - name:  Running calendar "{{z}}"
+     command: "{{z}}"
+     register: out
+
+   - debug: var=out.stdout
