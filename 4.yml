@@ -1,0 +1,27 @@
+---
+ - hosts: all
+   remote_user: root
+   vars:
+    - x:
+       - shivam
+       - tushar
+       - maya
+   tasks:
+
+#______________________________________________________________________________________ 
+#
+#       THIS IS FOR THE PARTICULAR SERVICE
+#
+#    - name: instatlin many sotfwares
+#      yum: name="{{ item }}"
+#     with_items: 
+#      - httpd
+#      - mariadb-server
+#      - vsftpd
+     
+#__________________________________________________________________________________________     
+
+#THIS IS FOR THE USER ADD.
+#WQ
+    - user: name="{{ item }}"  state=present password=redhat
+      with_items: "{{ x  }}"
