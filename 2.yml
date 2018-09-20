@@ -1,0 +1,28 @@
+---
+ - hosts: all
+   remote_user: root
+   vars:                        #Definning variables
+    - x: httpd
+    - y: firewalld  
+   tasks:
+ 
+     - name: copying repo files
+       copy: src=repos.repo dest=/etc/yum.repos.d/repos.repo  force=no  #force= no mean no one else can now put files
+
+#     - name: Installing git
+#       yum : name=git* state=latest
+        
+ #    - name: installing httpd
+#       yum:  name=httpd* state=present
+        
+     - name: starting the service for httpd
+       service: name=httpd state=started enabled=yes
+       register: out
+       
+     - debug: var=out
+       
+     - name: Shitting down "{{y}}"
+       service: name="{{y}}" state=stopped
+
+     - name: stopping "{{x}}"
+       service: name="{{x}}" state=restarted 
