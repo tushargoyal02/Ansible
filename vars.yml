@@ -1,0 +1,23 @@
+---
+ - hosts: all
+   vars: 
+    x: httpd
+    y: vsftpd
+   remote_user: root
+   tasks: 
+    - name: installing  vstpd
+      yum: name="{{y}}" state=present
+      register: y
+    - debug: var=y
+
+    - name: Installing httpd
+      yum: name="{{x}}" state=present
+      register: xx
+    - debug: var=xx
+
+    - name: Service started
+      service: name="{{x}}" state=restarted enabled=yes
+      register: z
+    - debug: msg="Service is been restarted"
+      when: z.changed == True
+      tags: servic
