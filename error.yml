@@ -1,0 +1,26 @@
+---
+ - hosts: all
+   ignore_errors: yes
+   vars: 
+    x: ekt23
+   remote_user: root
+   tasks: 
+
+    - name: installing ekt23
+      yum : name="{{x}}" state=present
+      register: out1
+    - debug: var=out1
+    - debug: msg="Installation failed"
+      when: out1.failed == true
+
+    - name: service
+      service: name="{{x}}" state=started
+      register: out2
+    - debug: var=out2
+    - debug: msg="Service failed"
+      when: out2.failed == true
+
+    - name: If files failed
+      debug: msg="Playbook was unsucceful"
+      when: out1.failed == true and out2.failed == true
+
