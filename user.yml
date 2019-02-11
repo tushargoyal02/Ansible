@@ -1,0 +1,7 @@
+---
+ - name: addding host loclahost
+   hosts: all
+   remote_user: root
+   tasks: 
+    - group: name=manager state=present
+    - user: name=tuh  state=present  groups=manager
